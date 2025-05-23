@@ -138,31 +138,6 @@ public class AddGuideFragment extends Fragment {
                     btnAdd.setEnabled(true);
                     return;
                 }
-                DocumentReference documentReference = fbs.getFire().collection("guides").document(productID);
-                Map<String, Object> productMap = new HashMap<>();
-                productMap.put("description", description);
-                productMap.put("photo", fbs.getSelectedImageURL().toString());
-                productMap.put("tittle", tittle);
-                productMap.put("phoneNumber", phoneNumber);
-                documentReference.set(productMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "Failed to add product", Toast.LENGTH_SHORT).show();
-                        btnAdd.setText("Add");
-                        btnAdd.setEnabled(true);
-                    }
-                });
-
-                //RatingBar productRatingBar = getView().findViewById(R.id.rbProductProductDetails);
-                float rating = 0;//productRatingBar.getRating();
-                // data validation
-
-
                 // add data to firestore
                 Guide Guide = new Guide(tittle,fbs.getSelectedImageURL().toString(), description, phoneNumber);
 
@@ -175,14 +150,6 @@ public class AddGuideFragment extends Fragment {
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.frameLayoutMain, new HomeFragment());
                         ft.commit();
-
-
-                        fbs.getFire().collection("guides").add(Guide).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.e("Failure AddGuide: ", e.getMessage());
-                            }
-                        });
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -190,6 +157,13 @@ public class AddGuideFragment extends Fragment {
                         Log.e("Failure AddGuide: ", e.getMessage());
                     }
                 });
+
+                //RatingBar productRatingBar = getView().findViewById(R.id.rbProductProductDetails);
+                float rating = 0;//productRatingBar.getRating();
+                // data validation
+
+
+
             }
 
         });
