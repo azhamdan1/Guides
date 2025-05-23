@@ -49,7 +49,7 @@
         android:layout_marginBottom="58dp"
         android:ems="10"
         android:hint="PhoneNumber"
-        android:inputType="text"
+        android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/btnAddAddProductFragment"
         app:layout_constraintStart_toStartOf="@+id/etDescriptionAddGuide"
         app:layout_constraintTop_toBottomOf="@+id/etTittleAddGuide" />
