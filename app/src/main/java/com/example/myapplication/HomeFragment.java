@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -20,6 +22,7 @@ import com.example.myapplication.Guide.GuideAdapter;
 import com.example.myapplication.Servicies.FirebaseServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -33,7 +36,7 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
     FirebaseServices fbs;
     private RecyclerView rvGuidsHome;
-    private ImageView ivAddGuidHome;
+    private ImageView ivAddGuidHome, ivSignOut;
     ArrayList<Guide> Guids;
     GuideAdapter adapter;
 
@@ -93,6 +96,7 @@ public class HomeFragment extends Fragment {
 
     private void connectComponents() {
         ivAddGuidHome = getView().findViewById(R.id.ivAddGuidHome);
+        ivSignOut = getView().findViewById(R.id.ivSignOutHome);
 
         ivAddGuidHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,14 +104,21 @@ public class HomeFragment extends Fragment {
                 gotoAddFragment();
             }
         });
-
+        ivSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getContext(), MainActivity.class); // replace with your login activity
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupAdapter() {
         fbs = FirebaseServices.getInstance();
         rvGuidsHome = getView().findViewById(R.id.rvGuidsHome);
-        ivAddGuidHome = getView().findViewById(R.id.ivAddGuidHome);
-
+        rvGuidsHome.setLayoutManager(new LinearLayoutManager(getContext()));
         Guids = new ArrayList<>();
         adapter = new GuideAdapter(getActivity(), Guids);
         rvGuidsHome.setAdapter(adapter);fbs.getFire().collection("guides").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

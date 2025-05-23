@@ -70,13 +70,6 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
             }
         });
 
-
-        holder.ivPhoto.setOnClickListener(v -> {
-            if (itemClickListener != null) {
-                itemClickListener.onItemClick(position);
-            }
-        });
-
         if (guide.getImageUrl() == null || guide.getImageUrl().isEmpty())
         {
             Picasso.get().load(R.drawable.ic_menu_gallery).into(holder.ivPhoto);
@@ -84,6 +77,13 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
         else {
             Picasso.get().load(guide.getImageUrl()).into(holder.ivPhoto);
         }
+        holder.ivPhoto.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onItemClick(position);
+            }
+        });
+
+
     }
 
     @Override
@@ -96,8 +96,8 @@ public class GuideAdapter extends RecyclerView.Adapter<GuideAdapter.ViewHolder> 
 
         ViewHolder(View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.tvTitleGuideDetails);
-            ivPhoto = itemView.findViewById(R.id.ivPhotoGuideDetails);
+            tvName = itemView.findViewById(R.id.tvTitleGuideItem);
+            ivPhoto = itemView.findViewById(R.id.ivPhotoGuideItem);
         }
 
         @Override

@@ -147,6 +147,7 @@ public class AddGuideFragment extends Fragment {
                 documentReference.set(productMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -163,7 +164,7 @@ public class AddGuideFragment extends Fragment {
 
 
                 // add data to firestore
-                Guide Guide = new Guide(fbs.getSelectedImageURL().toString(), tittle, description, phoneNumber);
+                Guide Guide = new Guide(tittle,fbs.getSelectedImageURL().toString(), description, phoneNumber);
 
 
                 fbs.getFire().collection("guides").add(Guide).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
